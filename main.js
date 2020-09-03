@@ -11,8 +11,8 @@ const parser = new xml2js.Parser();
  * 標籤: [tag]
  * 演員: [actor]
  */
-let pattern = "[year][number][tag]";
-let tagetPath = "H:\\StickDriver\\Japan";
+let pattern = "[number][tag]";
+let tagetPath = "/Volumes/Download/未命名檔案夾";
 let outputDir = "output";
 fs.ensureDirSync(path.join(tagetPath, outputDir));
 
@@ -43,9 +43,11 @@ recursive(tagetPath, ["output", ignoreFunc], function (err, files) {
                 const currPath = path.dirname(files[i]);
                 const newPath = path.join(path.dirname(currPath), folderName);
                 fs.renameSync(currPath, newPath);
-                // 建立資料夾
-                let newDir = path.join(tagetPath, outputDir, actors, folderName);
-                fs.ensureDirSync(newDir);
+                // 1.建立資料夾-依照演員分類
+                //let newDir = path.join(tagetPath, outputDir, actors, folderName);
+                // 2.每片單獨一個資料夾
+                let newDir = path.join(tagetPath, outputDir, folderName);
+                //fs.ensureDirSync(newDir);
                 fs.moveSync(newPath, newDir, { overwrite: true });
             });
         });
